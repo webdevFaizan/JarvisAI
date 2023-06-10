@@ -3,6 +3,7 @@ import speech_recognition as sr
 import webbrowser
 import os
 import subprocess
+import random
 # from openaitest import response
 from openaitest import change_prompt
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
@@ -69,20 +70,27 @@ while 1:
         say(f"Playing Svartlefiem sir...")
         flag = 0
         # os.system(f"open {musicPath}")
-    elif "hello" in s.lower():
+    elif "Open everything".lower() in s.lower():
         appPath = "C:/Program Files (x86)/Everything/Everything.exe"
         open_app(appPath)
         say(f"Opening Everything sir...")
         flag = 0
-    elif "Artificial Intelligence".lower() in s.lower():
-        print("Ask a question to GPT")
-        prompt = input()
-        # prompt = "What is google?"
+    elif "Answer me".lower() in s.lower():
+        # print("Ask a question to GPT")
+        prompt = " ".join(s.lower().split("answer me"))
+        print(prompt)
+        # exit(0)
         res = ai(f"{prompt}")
-        finalText = res["choices"][0]["text"]
+        finalText = f"OpenAI response for : {prompt} \n\n"
+        finalText += res["choices"][0]["text"]
         print(finalText)
-        say(f"{finalText}")
         flag = 0
+        if not os.path.exists("OpenAI"):
+            os.mkdir("OpenAI")
+
+        with open(f"OpenAI/{prompt} - {random.randint(1, 10000000000000000000000)}.txt", 'w') as file:
+            file.write(finalText)
+        say(res["choices"][0]["text"])
     for site in sites:
         if f"Open {site[0]}".lower() in s.lower():
             say(f"Opening {site[0]} sir...")

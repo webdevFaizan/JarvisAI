@@ -1,1 +1,1 @@
-apikey = "MYAPIKEY"
+apikey = ""
