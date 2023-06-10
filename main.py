@@ -3,7 +3,8 @@ import speech_recognition as sr
 import webbrowser
 import os
 import subprocess
-
+# from openaitest import response
+from openaitest import change_prompt
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
 
 
@@ -17,6 +18,10 @@ def open_music_file(file_path):
             print("Unsupported OS. Cannot open the file.")
     else:
         print("File not found.")
+
+
+def ai(text):
+    return change_prompt(text)
 
 
 def open_app(software_path):
@@ -69,7 +74,15 @@ while 1:
         open_app(appPath)
         say(f"Opening Everything sir...")
         flag = 0
-
+    elif "Artificial Intelligence".lower() in s.lower():
+        print("Ask a question to GPT")
+        prompt = input()
+        # prompt = "What is google?"
+        res = ai(f"{prompt}")
+        finalText = res["choices"][0]["text"]
+        print(finalText)
+        say(f"{finalText}")
+        flag = 0
     for site in sites:
         if f"Open {site[0]}".lower() in s.lower():
             say(f"Opening {site[0]} sir...")
