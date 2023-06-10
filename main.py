@@ -1,5 +1,6 @@
 import win32com.client
 import speech_recognition as sr
+import webbrowser
 
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
 
@@ -27,4 +28,6 @@ say("I am Jarvis A I")
 while 1:
     # s = input()
     s = takeCommand()
+    if "Open Youtube".lower() in s.lower():
+        webbrowser.open("https://youtube.com")
     say(s)
