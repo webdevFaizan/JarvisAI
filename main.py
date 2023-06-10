@@ -26,8 +26,14 @@ def takeCommand():
 
 say("I am Jarvis A I")
 while 1:
+    flag = 1
     # s = input()
     s = takeCommand()
-    if "Open Youtube".lower() in s.lower():
-        webbrowser.open("https://youtube.com")
-    say(s)
+    sites = [["youtube", "https://www.youtube.com"], ["twitter", "https://www.twitter.com"], ["instagram", "https://www.instagram.com"], ["facebook", "https://www.facebook.com"]]
+    for site in sites:
+        if f"Open {site[0]}".lower() in s.lower():
+            say(f"Opening {site[0]} sir...")
+            webbrowser.open(f"{site[1]}")
+            flag = 0
+    if flag == 1:
+        say(s)
