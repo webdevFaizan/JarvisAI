@@ -1,0 +1,5 @@
+OpenAI response for :   what date details 
+
+?
+
+Date details can include when a event happened or will happen, the time a event is set to start and end, and any other date related specifics such as the location of a event.

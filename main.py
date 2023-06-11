@@ -75,22 +75,28 @@ while 1:
         open_app(appPath)
         say(f"Opening Everything sir...")
         flag = 0
+    elif "Stop".lower() in s.lower():
+        say(f"Bye sir, see you soon...")
+        exit(0)
     elif "Answer me".lower() in s.lower():
         # print("Ask a question to GPT")
-        prompt = " ".join(s.lower().split("answer me"))
-        print(prompt)
-        # exit(0)
-        res = ai(f"{prompt}")
-        finalText = f"OpenAI response for : {prompt} \n\n"
-        finalText += res["choices"][0]["text"]
-        print(finalText)
-        flag = 0
-        if not os.path.exists("OpenAI"):
-            os.mkdir("OpenAI")
+        try:
+            prompt = " ".join(s.lower().split("answer me"))
+            print(prompt)
+            # exit(0)
+            res = ai(f"{prompt}")
+            finalText = f"OpenAI response for : {prompt} \n\n"
+            finalText += res["choices"][0]["text"]
+            print(finalText)
+            flag = 0
+            if not os.path.exists("OpenAI"):
+                os.mkdir("OpenAI")
 
-        with open(f"OpenAI/{prompt} - {random.randint(1, 10000000000000000000000)}.txt", 'w') as file:
-            file.write(finalText)
-        say(res["choices"][0]["text"])
+            with open(f"OpenAI/{prompt} - {random.randint(1, 10000000000000000000000)}.txt", 'w') as file:
+                file.write(finalText)
+            say(res["choices"][0]["text"])
+        except Exception as e:
+            print(e)
     for site in sites:
         if f"Open {site[0]}".lower() in s.lower():
             say(f"Opening {site[0]} sir...")
