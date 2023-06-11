@@ -8,6 +8,7 @@ import random
 from openaitest import change_prompt
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
 
+chatPrompt = ""
 
 def open_music_file(file_path):
     if os.path.exists(file_path):
@@ -55,6 +56,39 @@ def takeCommand():
             return "Could not understand you, sorry"
 
 
+def chat():
+    print("Inside chatting session")
+    say("Inside chatting session")
+
+    global chatPrompt
+    while 1:
+        human = takeCommand()
+        if 'stop'.lower() in human.lower():
+            if not os.path.exists("OpenAI"):
+                os.mkdir("OpenAI")
+
+            with open(f"OpenAI/ChattingSession - {random.randint(1, 10000000000000000000000)}.txt", 'w') as file:
+                file.write(chatPrompt)
+            return    
+        properChattingSentence = f"Faizan : {human} \nJarvis :"
+        chatPrompt += properChattingSentence
+        try:
+            # prompt = " ".join(s.lower().split("answer me"))
+            print(chatPrompt)
+            # exit(0)
+            res = ai(f"{chatPrompt}")
+            chatPrompt += res["choices"][0]["text"]
+            chatPrompt += "\n\n"
+            # finalText = f"OpenAI response for : {chatPrompt} \n\n"
+            # finalText += res["choices"][0]["text"]
+            # print(finalText)
+            # flag = 0
+            
+            say(res["choices"][0]["text"])
+        except Exception as e:
+            print(e)
+
+
 say("I am Jarvis A I")
 while 1:
     flag = 1
@@ -78,6 +112,8 @@ while 1:
     elif "Stop".lower() in s.lower():
         say(f"Bye sir, see you soon...")
         exit(0)
+    elif "chat".lower() in s.lower():
+        chat()
     elif "Answer me".lower() in s.lower():
         # print("Ask a question to GPT")
         try:
